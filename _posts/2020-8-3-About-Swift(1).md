@@ -1,3 +1,8 @@
+---
+title: "About Swift5.2 (Part.1)"
+date: 2017-10-20 08:26:28 -0400
+categories: jekyll update
+---
 ## About Swift 5.2 (Part.1)
 
 Apple에서 공개한 The Swift Programming Language 책의 Basics 부분을 참고하여 작성
