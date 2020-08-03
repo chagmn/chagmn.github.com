@@ -1,7 +1,7 @@
 ---
 title: "About Swift5.2 (Part.1)"
 date: 2020-8-3
-categories: iOS Swift
+categories: iOS&Swift
 ---
 ## About Swift 5.2 (Part.1)
 
