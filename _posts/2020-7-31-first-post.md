@@ -1,6 +1,6 @@
 ---
 title: "첫 포스트! (테스트)"
 date: 2017-10-20 08:26:28 -0400
-categories: jekyll update
+categories: update
 ---
 테스트 용으로 포스트를 올려봅니다.
