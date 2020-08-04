@@ -3,7 +3,7 @@ title: "About Swift5.2 (Part.1)"
 date: 2020-8-3
 categories: iOS&Swift
 ---
-## About Swift 5.2 (Part.1)
+# About Swift 5.2 (Part.1)
 
 Apple에서 공개한 The Swift Programming Language 책의 Basics 부분을 참고하여 작성
 
