@@ -1,10 +1,10 @@
 ---
-title: "About Swift5.2 (Part.2)"
+title: "The Basics (Part.2)"
 date: 2020-8-4
-categories: iOS&Swift
+categories: Swift5
 ---
 
-# About Swift (Part.2)
+# The Basics (Part.2)
 
 ## Optional (옵셔널, 선택적 값 타입)
 옵셔널 값이 없을 수도 있는 상황에서 사용한다. 옵셔널은 두 가지 가능성을 표현한다. 첫 번째는 값이 있어서 그 옵셔널이 감싸고 있는 값에 접근할 수 있는 경우이고, 두 번째는 값이 아예 있지 않은 경우가 있다.<br>
@@ -237,3 +237,6 @@ precondition( index > 0, "Index must be greater than zero.")
 > 여기까지 Swift문서 Basic부분을 정리했다. 몇 부분은 빠졌을 수도 있는데 자료형을 표현하는 부분이여서 제외를 했다. 
 > 그래도 정리하면서 Swift의 특징이나 기본적인 부분에 대해서 많이 알 수 있었고 더 나아가 Swift로 작성할 나의 iOS 어플들을 좀더 클린한 코드로 작성할 수 있도록 Swift 버전이 업데이트 될 때마다 추가되는 부분은 정리하려고 한다. <br>
 > 감사합니다.
+
+##참고 문서
+* https://docs.swift.org/swift-book/LanguageGuide/TheBasics.html
