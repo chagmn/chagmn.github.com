@@ -1,7 +1,7 @@
 ---
 title: "Basic Operators"
 date: 2020-8-6
-categories: Swift
+categories: Swift5
 ---
 
 # Basic Operators (기본 연산자)
