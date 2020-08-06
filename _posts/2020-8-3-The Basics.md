@@ -1,11 +1,10 @@
 ---
-title: "About Swift5.2 (Part.1)"
+title: "The Basics (Part.1)"
 date: 2020-8-3
-categories: iOS&Swift
+categories: Swift5
 ---
-# About Swift 5.2 (Part.1)
 
-Apple에서 공개한 The Swift Programming Language 책의 Basics 부분을 참고하여 작성
+### The Basics
 
 ### Constants and Variables (상수와 변수)
 
@@ -133,3 +132,6 @@ let 200Status = (code: 200, description: "OK")
 print("The status code is \(200Status.code)")
 // The status code is 200 을 출력
 ```
+
+##참고 문서
+* https://docs.swift.org/swift-book/LanguageGuide/TheBasics.html
