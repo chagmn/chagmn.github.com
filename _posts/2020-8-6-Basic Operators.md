@@ -1,3 +1,9 @@
+---
+title: "Basic Operators"
+date: 2020-8-6
+categories: Swift
+---
+
 # Basic Operators (기본 연산자)
 연산자는 값을 검사하고 바꾸고 결합하는데 사용하는 특별한 기호나 문자이다. 예를 들어 더하기 연산자 (+)는 `let i = 1 + 2`처럼 두 숫자를 더하거나, 논리적 AND 연산 (&&)은 `if enterdDoorCode && passedRetinaScan`처럼 두개의 부울 값을 결합하는데 사용한다.<br>
 
@@ -399,3 +405,6 @@ if (enteredDoorCode && passedRetinaScan) || hasDoorKey ||knowsOverridePassword {
 ```
 
 괄호를 사용하면 처음 두 값은 전체 논리에서 별도의 가능한 상태의 일부로 간주된다. 복합식의 출력은 변하지 않지만, 전체의 의도를 읽는 사람에게 명확하게 해준다. 가독성은 항사 간결성보다 선호된다. 의도를 명확하게 하는 데 도움이되는 곳에 괄호를 사용해라.
+
+##참고 문서
+* https://docs.swift.org/swift-book/LanguageGuide/BasicOperators.html
