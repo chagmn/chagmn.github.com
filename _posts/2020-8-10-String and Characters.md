@@ -1,3 +1,9 @@
+---
+title: "String and Characters"
+date: 2020-8-10
+categories: Swift5
+---
+
 #String and Characters (문자열과 문자)
 
 문자열은 `"Hello, world"`나 `"albatross"`와 같이 문자들의 집합이다. Swift 문자열들은 `String`자료형을 대표한다. `String`의 내용들은 `Character`값의 컬렉션을 포함해서 다양한 방법으로 접근 할 수 있다. <br>
