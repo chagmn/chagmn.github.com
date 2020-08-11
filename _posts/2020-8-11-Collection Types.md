@@ -31,8 +31,6 @@ Array, Set, Dictionary를 만들고 이를 변수를 할당하면 컬렉션은 �
 
 Swift 배열 타입은 `Array<Element>`로 작성되며, `Element`에는 저장될 수 있는 배열의 값의 타입이 들어간다. 짧게 배열의 타입을 `[Element]`라고 작성 할 수도 있다. 비록 두 모양이 기능적으로 동일하지만, 단축 형태를 더 선호하고 이 가이드에서 배열 타입을 언급 할 떄 사용된다.
 
-
-
 ### Creating an Empty Array (빈 배열 생성)
 
 초기화 구문을 사용해 확실한 타입의 빈 배열을 생성 할 수 있다.
@@ -44,6 +42,7 @@ print("someInts is of type [Int] with \(someInts.count) items.")
 ```
 
 `someInts`변수의 타입이 초기화에 의해 `[Int]`라고 추론됬다. <br>
+
 
 비록,
 
