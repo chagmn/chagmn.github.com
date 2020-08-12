@@ -496,3 +496,125 @@ var airports: [String: String] = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
 `airports`딕셔너리는 "딕셔너리는 `String`타입의 키와 `String`타입의 값을 갖는다"라는 표현의 `[String: String]`타입을 갖는다고 명시되어 있다.<br>
 
 `airports`딕셔너리는 2개의 키-값 쌍을 갖는 딕셔너리 리터럴로 초기화 되어 있다. 첫 번째 쌍은 키가 `"YYZ"`이고, 값은 `"Toronto Person"` 이다. 두 번째 쌍은 키가 `"DUB"`이고, 값은 `"Dublin"`이다.<br>
+
+두 `String: String`쌍을 갖는 딕셔너리 리터럴이다. 이 키-값 타입은 `airpots`변수의 명시와 일치한다. 그래서 딕셔너리 리터럴 할당은 `airports`딕셔너리를 두 초기 항목과 초기화하는 방법으로 허가한다.<br>
+
+일관된 타입의 키-값을 갖는 딕셔너리 리터럴로 초기화되어 있다면 배열처럼 딕셔너리의 타입을 적지 않아도 된다. `airports`의 초기화는 짧은 형식으로 되어 있다.
+
+```swift
+var airports = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
+```
+
+리터럴 안의 모든 키는 같은 타입으로 되어있고 마찬가지로 모든 값도 같은 타입으로 되었어 Swift는 `airports`딕셔너리에 `[String: String]`이 정확한 타입이라는 것을 추론 할 수 있다.
+
+
+
+### Accessing and Modifying a Dictionary (딕셔너리에 접근 및 수정)
+
+메소드나 프로퍼티 또는 서브 스크립트 구문을 사용해 딕셔너리에 접근하거나 수정할 수 있다.<br>
+
+배열처럼 딕셔너리의 항목의 수를 찾기 위해서는 `count`프로퍼티를 사용한다.
+
+```swift
+print("The airports dictionary contains \(airports.count) items.")
+// The airports dictionary contains 2 items. 출력
+```
+
+`isEmpty`프로퍼티를 사용해 `count`프로퍼티가 0과 동일한 것을 간편하게 찾아낼 수 있다.
+
+```swift
+if airports.isEmpty {
+    print("The airports dictionary is empty.")
+} else {
+    print("The airports dictionary is not empty.")
+}
+// Prints "The airports dictionary is not empty. 출력
+```
+
+서브 스크립트 구문을 사용해 딕셔너리에 새로운 항목을 추가할 수 있다. 서브 스크립트 인데스로써 적당한 타입의 새로운 키를 사용하고 적당한 타입의 새 값을 할당한다.
+
+```swift
+airports["LHR"] = "London"
+// airports 딕셔너리는 3개의 항목을 포함
+```
+
+서브 스크립트 구문을 사용해 특정 키의 값을 바꿀 수 있다.
+
+```swift
+airports["LHR"] = "London Heathrow"
+// 키 "LHR"의 값은 "London Heathrow" 로 바뀜
+```
+
+서브 스크립트의 대안으로 딕셔너리의 `updateValue(_:forKey:)`메소드를 사용해 특정 키의 값을 바꾸거나 설정 할 수 있다. 위의 서브 스크립트 처럼, `updateValue(_:forKey:)`메서드는 키가 없는 경우 값을 설정하고, 키가 있는 경우 값을 변경한다. 그러나 서브 스크립트와는 다르게, `updateValue(_:forKey:)`메서드는 업데이트가 수행된 후 이전 값을 반환한다. 이를 통해 업데이트가 이루어졌는지의 여부를 확인할 수 있다.<br>
+
+`updateValue(_:forKey:)`메서드는 딕셔너리의 값 타입의 옵셔널한 값을 반환한다. 예를 들어, `String`값을 저장하는 딕셔너리에서 메서드는 `String?`이나 `옵셔널 String`의 값을 반환한다. 이 옵셔널한 값은 업데이트 전에 존재했던 값이나 값이 없었으면 `nil`값을 포함한다:
+
+```swift
+if let oldValue = airports.updateValue("Dublin Airport", forKey: "DUB") {
+    print("The old value for DUB was \(oldValue).")
+}
+// The old value for DUB was Dublin. 출력
+```
+
+서브 스크립트 구문을 사용해 해당 키에 `nil`값을 할당해 딕셔너리에서 키-값 쌍을 제거할 수 있다.
+
+```swift
+airports["APL"] = "Apple International"
+// "Apple International"값은  APL키의 진짜 값이 아니여서 삭제
+airports["APL"] = nil
+// APL은 딕셔너리에서 삭제
+```
+
+또한, 딕셔너리에서 키-값 쌍을 제거하기 위해 `removeValue(forKey:)`메서드를 사용할 수 있따. 이 메서드는 존재하면 키-값 쌍을 제거하고 제거된 값을 반환하거나 값이 존재하지 않으면 `nil`을 반환한다.
+
+```swift
+if let removedValue = airports.removeValue(forKey: "DUB") {
+    print("The removed airport's name is \(removedValue).")
+} else {
+    print("The airports dictionary does not contain a value for DUB.")
+}
+// The removed airport's name is Dublin Airport. 출력
+```
+
+
+
+### Iterating Over a Dictionary (딕셔너리 전체 반복)
+
+`for-in`루프를 사용해 딕셔너리 전체를 반복할 수 있다. 딕셔너리 각 항목은 `(key, value)`튜플로 반환되고 튜플의 멤버를 일시적 상수나 변수로 분해할 수 있다.
+
+```swift
+for (airportCode, airportName) in airports {
+    print("\(airportCode): \(airportName)")
+}
+// LHR: London Heathrow
+// YYZ: Toronto Pearson
+```
+
+키 및 값 속성에 접근하여 키 또는 값의 반복 가능한 컬렉션을 검색 할 수도 있다.
+
+```swift
+for airportCode in airports.keys {
+    print("Airport code: \(airportCode)")
+}
+// Airport code: LHR
+// Airport code: YYZ
+
+for airportName in airports.values {
+    print("Airport name: \(airportName)")
+}
+// Airport name: London Heathrow
+// Airport name: Toronto Pearson
+```
+
+Array 인스턴스를 사용하는 API와 함께 딕셔너리의 키 및 값을 사용하는 경우 `keys` 또는 `values`프로퍼티로 새 배열을 초기화 한다.
+
+```swift
+let airportCodes = [String](airports.keys)
+// airportCodes is ["LHR", "YYZ"]
+
+let airportNames = [String](airports.values)
+// airportNames is ["London Heathrow", "Toronto Pearson"]
+```
+
+Swift의 딕셔너리 타입은 순서를 정의하지 않는다. 특정 순서로 딕셔너리의 키나 값을 반복하려면 `sorted()`메서드를 `keys`나 `values`프로퍼티를 사용한다.
+
