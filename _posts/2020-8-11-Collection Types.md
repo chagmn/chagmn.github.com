@@ -167,19 +167,332 @@ shoppingList[0] = "Six eggs"
 // "Eggs"에서 "Six eggs"로 변경
 ```
 
+서브 스크립트 구문을 사용할 때, 선택한 인덱스는 유효해야 한다. 예를 들어, `shoppingList[shoppingList.count] = "Salt"`라 적을 때, 배열 끝에 항목을 추가하려고 하면 런타임 에러가 발생한다.<br>
+
+또한 서브 스크립트 구문을 사용해 한번에 값의 범위를 바꿀 수 있다. 심지어 대체 값의 집합의 길이가 대체하려는 범위와 다른경우에도 가능하다. 아래 예제에서 `"Chocolate Spread", "Cheese", "Butter"`를 `"Banana", "Apples"`로 바꾼다:
+
+```swift
+shoppingList[4...6] = ["Bananas", "Apples"]
+// shoppingList는 6개 항목을 갖고 있다
+```
+
+배열에서 특정 인덱스에 항목을 삽입하고 싶을 때, 배열의 `insert(_:at:)`메소드를 호출한다.
+
+```swift
+shoppingList.insert("Maple Syrup", at: 0)
+// shoppingList에 7개 항목 존재
+// "Maple Syrup"이 첫번째 항목
+```
+
+0번 인덱스를 가리키는 shopping list의 맨 첫번째에 `"Maple Syrup"`이라는 값의 새로운 항목을 삽입하기 위해서 `insert(_:at:)`메서드를 호출했다.<br>
+
+유사하게, 배열로부터 `remove(at:)`메서드를 사용해 아이템을 삭제 할 수 있다. 이 메서드는 특정 인덱스에 위치한 항목을 제거하고 제거한 항목을 반환한다.
+
+```swift
+let mapleSyrup = shoppingList.remove(at: 0)
+// 인덱스 0에 해당하는 항목 삭제
+// shoppingList에는 6개 항목 존재, Maple Syrup은 없음
+// mapleSyrup상수는 "Maple Syrup"을 갖음
+```
+
+항목이 제거되면 배열에는 어떠한 공간도 존재하지 않아서 인덱스 0의 값은 다시 한 번 `"Six eggs"`와 같다.
+
+```swift
+firstItem = shoppingList[0]
+// firstItem는 "Six eggs"
+```
+
+배열의 마지막 항목을 제거하려면 `remove(at:)`메서드보다 `removeLast()`메서드를 사용해 배열의 `count`프로퍼티를 쿼리 할 필요 없도록 한다. `remove(at:)`메서드처럼 `removeLast()`도 제거된 항목을 반환한다.
+
+```swift
+let apples = shoppingList.removeLast()
+// 배열의 마지막 항목은 제거
+// shoppingList는 5개 항목, Apples는 없음
+// 상수 apples는 제거된 "Apples"를 갖음
+```
 
 
-## Sets
+
+### Iterating Over an Array (전체 배열 반복)
+
+`for-in`루프를 사용해 배열의 전체 값을 반복 할 수 있다.
+
+```swift
+for item in shoppingList {
+    print(item)
+}
+// Six eggs
+// Milk
+// Flour
+// Baking Powder
+// Bananas
+```
+
+각 항목의 정수 인덱스와 해당 값이 필요한 경우 `enumerated()`메서드를 사용해 전체 배열을 반복한다. 배열에서 각 항목에 대해 `enumerated()`메서드는 정수와 항목으로 구성된 튜플을 반환한다. 정수는 0에서 부터 시작되며 각 아이템마다 1씩 증가한다. 전체 배열을 세게되면, 이 정수들은 각 항목의 인덱스와 일치한다. 튜플은 반복의 일부로써 일시적인 상수나 변수로 분해 할 수 있다.
+
+```swift
+for (index, value) in shoppingList.enumerated() {
+    print("Item \(index + 1): \(value)")
+}
+// Item 1: Six eggs
+// Item 2: Milk
+// Item 3: Flour
+// Item 4: Baking Powder
+// Item 5: Bananas
+```
 
 
 
-## Performing Set Operations
+## Sets (집합)
+
+Set은 순서가 없는 같은 타입의 고유한 값을 저장하는 컬렉션이다. 항목 순서가 중요하지 않거나 항목이 한 번만 표시되도록 해야하는 경우 배열 대신 집합을 사용한다.<br>
+
+
+
+### Hash Value for Set Types (집합 유형을 위한 해시 값)
+
+타입은 집합에 저장되기 위해 해시가능(정수 해시 값을 제공하는) 타입이어야 한다. 즉, 타입은 자체에 대한 해시 값을 계산하는 방법을 제공해야 한다. 해시 값은 동일하게 비교되는 모든 개체에 대해 동일한 `Int`값으로, `a==b`이면, `a.hashValue == b.hashValue`이다.<br>
+`String`, `Int`, `Double`, `Bool`같은 Swift의 모든 타입은 기본으로부터 해시가능이고 집합 값 타입이나 딕셔너리 키 타입으로 사용할 수 있다. 연결된 값이 없는 열거형 케이스 값도 기본적으로 해시가능 할 수 있다.<br>
+
+### Set Type Syntax (집합 타입 구문)
+
+Swift 집합의 타입은 `Set<Element>`로 작성된다. 여기서 `Element`는 집합이 저장할 수 있는 타입이다. 배열과 달리 집합에는 동등한 단축 형식이 없다.
+
+
+
+### Creating and Initializing an Empty Set (빈 집합 생성 및 초기화)
+
+초기화 구문을 사용해 확실한 타입의 집합을 만들 수 있다.
+
+```swift
+var letters = Set<Character>()
+print("letters is of type Set<Character> with \(letters.count) items.")
+// letters is of type Set<Character> with 0 items. 출력
+```
+
+또한, 문맥이 이미 타입 정보를 제공하는 함수 인자나 이미 정의된 상수나 변수에서 빈 배열 리터럴과 함께 빈 집합을 만들 수 있다.
+
+```swift
+letters.insert("a")
+// letters는 문자타입의 1개 값을 갖음
+letters = []
+// letters는 빈 집합이지만, Set<Character> 임
+```
+
+
+
+### Creating a Set with an Array Literal (배열 리터럴을 사용해 집합 생성
+
+하나 이상의 값을 집합 컬렉션으로 쓰는 간단한 방법으로 배열 리터럴을 사용해 집합을 최기화 할 수 있다.<br>
+아래 예제는 `String`값을 저장하는 `favoriteGenres`라 불리는 집합을 생성했다.
+
+```swift
+var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
+// favoriteGenres는 3개의 초기값으로 초기화
+```
+
+`favoriteGenres`변수는 `Set<String>`으로 쓰이고 "`String`값의 집합"이라고 정의되어있다. 이 특정 집합은 `String`타입의 값을 갖고 `String`값만 저장을 허락한다. `favoriteGenres`집합은 배열 리터럴로 적힌 3개의 문자열 변수(`"Rock", "Classical", "Hip hop"`)로 초기화했다.<br>
+
+집합 타입은 배열 리터럴만으로부터 추론될 수 없다. 그래서 집합 타입은 반드시 명확한 선언이 있어야 한다. 그러나 Swift 타입 추론때문에 만약  오직 하나의 타입의 값을 포함하는 배열 리터럴을 가지고 초기화를 했다면 집합 요소의 타입을 적을 필요 없다. `favoriteGenres`를 짧은 형태로 초기화문을 작성했다:
+
+```swift
+var favoriteGenres: Set = ["Rock", "Classical", "Hip hop"]
+```
+
+배열 리터럴의 모든 값은 같은 타입이기 때문에, Swift는 `Set<String`이 `favoriteGenres`변수에 사용할 정확한 타입이라고 추론 할 수 있다.
+
+
+
+### Accessing and Modifying a Set (집합에 접근하고 수정)
+
+메소드나 프로퍼티들을 통해 집합에 접근하거나 수정 할 수 있다.
+
+집합의 아이템의 수를 찾아낼 때, 읽기만 가능한 `count`프로퍼티를 사용한다.
+
+```swift
+print("I have \(favoriteGenres.count) favorite music genres.")
+// I have 3 favorite music genres. 출력
+```
+
+`isEmpty`프로퍼티를 사용하면 `count`프로퍼티가 0과 동일할 때를 짧게 나타낼 수 있다.
+
+```swift
+if favoriteGenres.isEmpty {
+    print("As far as music goes, I'm not picky.")
+} else {
+    print("I have particular music preferences.")
+}
+// I have particular music preferences. 출력
+```
+
+집합의 `insert(_:)`메서드를 사용해 집합에 새로운 항목을 추가 할 수 있다.
+
+```swift
+favoriteGenres.insert("Jazz")
+// favoriteGenres는 4개 항목이 존재
+```
+
+집합 안의 항목을 제거하고 제거한 항목을 반환하거나 집합이 갖고 있지 않으면 `nil`을 반환하는 `remove(_:)`메소드를 호출해 집합으로 부터 항목 제거 할 수 있다. 또한, 모든 항목을 제거할 때는 `removeAll()`메서드를 호출한다.
+
+```swift
+if let removedGenre = favoriteGenres.remove("Rock") {
+    print("\(removedGenre)? I'm over it.")
+} else {
+    print("I never much cared for that.")
+}
+// Rock? I'm over it. 출력
+```
+
+집합이 특정 항목을 포함하고 있는지 확인할 때, `contains(_:)`메서드를 사용한다.
+
+```swift
+if favoriteGenres.contains("Funk") {
+    print("I get up on the good foot.")
+} else {
+    print("It's too funky in here.")
+}
+// It's too funky in here. 출력
+```
+
+
+
+### Iterating Over a Set (집합 전체 반복)
+
+`for-in`루프를 사용해 집합의 전체 값을 반복 할 수 있다.
+
+```swift
+for genre in favoriteGenres {
+    print("\(genre)")
+}
+// Classical
+// Jazz
+// Hip hop
+```
+
+Swift의 집합 타입은 순서를 정의하지 않는다. 집합의 특정 순서의 값을 반복하려면 집합의 요소를 `<`연산자를 사용해 정렬된 배열로 반환하는 `sorted()`메서드를 사용한다.
+
+```swift
+for genre in favoriteGenres.sorted() {
+    print("\(genre)")
+}
+// Classical
+// Hip hop
+// Jazz
+```
+
+
+
+## Performing Set Operations (집합 연산 수행)
+
+두 집합을 결합하거나, 두 집합이 공통으로 갖는 값을 결정하거나, 두 집합이 동일한 값을 모두 포함하는지 아니면 일부를 포함하는지, 전혀 포함하지 않는지 결정하는 등의 기본적인 집합 작업을 효율적으로 수행 할 수 있다.
+
+
+
+### Fundamental Set Operations (기본적인 집합 연산)
+
+아래 사진은 색칠된 구역으로 표시되는 다양한 집합 연산의 결과와 함께 `a`, `b` 두 집합을 묘사한다.<br>
+
+![](https://docs.swift.org/swift-book/_images/setVennDiagram_2x.png)
+
+* `intersection(_:)`메서드를 사용해 두 집합의 공통 된 값으로 새 집합을 생성한다.
+* `symmetricDifference(_:)`메서드를 사용해 두 집합 중 하나의 값을 사용해 새로운 집합을 생성한다.
+* `union(_:)`메서드를 사용해 두 집합의 모든 값으로 새로운 집합을 생성한다.
+* `subtracting(_:)`메서드를 사용해 특정 집합의 값을 갖지 않는 집합을 생성한다.
+
+```swift
+let oddDigits: Set = [1, 3, 5, 7, 9]
+let evenDigits: Set = [0, 2, 4, 6, 8]
+let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
+
+oddDigits.union(evenDigits).sorted()
+// [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+oddDigits.intersection(evenDigits).sorted()
+// []
+oddDigits.subtracting(singleDigitPrimeNumbers).sorted()
+// [1, 9]
+oddDigits.symmetricDifference(singleDigitPrimeNumbers).sorted()
+// [1, 2, 9]
+```
+
+
+
+### Set Membership and Equality (집합 멤버와 동등)
+
+아래 그림은 집합간에 공유되는 요소를 나타내는 중첩 영역이 있는 3개 집합 `a`, `b`, `c`를 보여준다. 집합`a`는 집합`b`의 모든 요소를 포함하고 있기 때문에 집합`a`는 집합`b`의 `superset`이다. 반대로, 집합 `b`는 집합 `a`의 `subset`이다. 집합 `b`와 집합 `c`는 공통 요소를 공유하지 않기 때문에 `disjoint` 이다.
+
+![](https://docs.swift.org/swift-book/_images/setEulerDiagram_2x.png)
+
+* 동등 연산자(`==`)를 사용해 두 집합이 모두 같은 값을 갖는지 확인한다.
+* `isSubset(of:)`메서드를 사용해 집합의 모든 값이 특정 집합에 포함되는지 확인한다.
+* `isSuperset(of:)`메서드를 사용해 특정 집합의 모든 값이 집합에 포함되는지 확인한다.
+* `isStrictSubset(of:_)`나 `isStrictSuperset(of:)`메서드를 사용해 집합이 subset인지 superset인지 확인하지만, 특정 집합과 동일한지는 확인 못한다.
+* `isDisjoint(with:)`메서드를 사용해 두 집합이 공통으로 갖는 값이 없는지 확인한다.
+
+```swift
+let houseAnimals: Set = ["🐶", "🐱"]
+let farmAnimals: Set = ["🐮", "🐔", "🐑", "🐶", "🐱"]
+let cityAnimals: Set = ["🐦", "🐭"]
+
+houseAnimals.isSubset(of: farmAnimals)
+// true
+farmAnimals.isSuperset(of: houseAnimals)
+// true
+farmAnimals.isDisjoint(with: cityAnimals)
+// true
+```
 
 
 
 ## Dictionaries
 
+Dictionary는 순서 없이 컬렉션에서 같은 타입의 키와 같은 타입의 사이의 관계를 저장한다. 각 값은 딕셔너리에서 값을 식별하는 행동을 하는 유일한 키와 관련되어 있다. 배열에서의 항목과 다르게, 딕셔너리의 항목은 특별한 순서를 갖지 않는다. 식별자르 기반으로한 값을 찾을 때, 딕셔너리가 필요하며 현실의 사전에서 특정 단어의 정의를 찾을 때와 동일한 방법이다.<br>
 
 
 
+### Dictionary Type Shorthand Syntax (딕셔너리 타입 단축 구문)
 
+Swift 딕셔너리 타입은 `Dictionary<Key, Value>`로 작성되며, `Key`에는 딕셔너리 키처럼 사용되는 값의 타입이 들어가고, `Value`에는 키들을 위해 저장되는 딕셔너리의 값의 타입이 들어간다.<br>
+
+딕셔너리 타입을 짧게 `[Key: Value]`로 작성할 수 있다. 비록 두 형태가 기능적으로 동일하지만, 짧은 형태가 선호되고, 이 가이드에서도 딕셔너리 타입을 표현하는데 사용된다.<br>
+
+
+
+### Creating an Empty Dictionary (빈 딕셔너리 생성)
+
+배열처럼, 초기화 구문을 사용해 확실한 타입의 빈 딕셔너리를 생성할 수 있다.
+
+```swift
+var namesOfIntegers = [Int: String]()
+// namesOfIntegers는 빈 [Int: String]타입의 딕셔너리
+```
+
+`[Int: String]`타입의 빈 딕셔너리를 생성하고 사람이 읽을 수 있는 정수 값을 저장한다.   키는 `Int`형이고, 값은 `String`형이다.<br>
+
+문맥이 이미 타입 정보를 제공하면, `[:]`의 빈 딕셔너리 리터럴을 사용해 빈 딕셔너리를 생성할 수 있다.
+
+```swift
+namesOfIntegers[16] = "sixteen"
+// namesOfInteger는 1개의 키-값 쌍을 갖음
+namesOfIntegers = [:]
+// namesOfIntegers는 [Int: String]형의 빈 딕셔너리
+```
+
+
+
+### Creating a  Dictionary with a Dictionary Literal (딕셔너리 리터럴로 딕셔너리 생성하기)
+
+앞에 본 배열 리터럴과 구문이 유사한 딕셔너리 리터럴로 딕셔너리를 초기화할 수 있다. 딕셔너리 리터럴은 딕셔너리 컬렉션으로써 하나 이상의 키-값 쌍을 작성하는 단순 방법이다.<br>
+
+키-값 쌍은 키와 값의 결합이다. 딕셔너리 리터럴에서 키와 값은 키-값 쌍이 콜론으로 분리된 것이다. 키-값 쌍은 리스트로 작성되며 콤마로 구분되고 대괄호로 감쌓였다.<br>
+
+[key 1: value 1, key 2: value 2, key 3: value 3]
+
+아래 예는 공항의 이름을 저장하는 딕셔너리를 생성했다. 딕셔너리에서 키는 3개 문자의 국제 운송 연합 코드이고 값은 공항 이름이다.
+
+```swift
+var airports: [String: String] = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
+```
+
+`airports`딕셔너리는 "딕셔너리는 `String`타입의 키와 `String`타입의 값을 갖는다"라는 표현의 `[String: String]`타입을 갖는다고 명시되어 있다.<br>
+
+`airports`딕셔너리는 2개의 키-값 쌍을 갖는 딕셔너리 리터럴로 초기화 되어 있다. 첫 번째 쌍은 키가 `"YYZ"`이고, 값은 `"Toronto Person"` 이다. 두 번째 쌍은 키가 `"DUB"`이고, 값은 `"Dublin"`이다.<br>
